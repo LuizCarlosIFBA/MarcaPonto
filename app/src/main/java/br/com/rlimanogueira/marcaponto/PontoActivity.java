@@ -18,8 +18,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import br.com.rlimanogueira.marcaponto.DAO.DadosDAO;
-import br.com.rlimanogueira.marcaponto.DAO.SQLiteDAO;
-import br.com.rlimanogueira.marcaponto.Model.Horario;
+import br.com.rlimanogueira.marcaponto.Model.Dados;
 
 public class PontoActivity extends AppCompatActivity {
 
@@ -47,20 +46,20 @@ public class PontoActivity extends AppCompatActivity {
 
    private void carregaDados() {
         Intent intent = getIntent();
-        Horario horario = (Horario) intent.getSerializableExtra("horario");
-        if(horario!=null){
-            helper.preencherFormulario(horario);
+        Dados dados = (Dados) intent.getSerializableExtra("dados");
+        if(dados !=null){
+            helper.preencherFormulario(dados);
             data.setEnabled(false);
             horaEntrada.setEnabled(false);
-            if (horario.getsaidaIntervalo().isEmpty()) {
+            if (dados.getsaidaIntervalo().isEmpty()) {
                carregaHoraSaidaIntervalo();
                voltaIntervalo.setEnabled(false);
                horaSaida.setEnabled(false);
-            }else if(horario.getvoltaIntervalo().isEmpty()){
+            }else if(dados.getvoltaIntervalo().isEmpty()){
                 carregaHoraVoltaIntervalo();
                 saidaIntervalo.setEnabled(false);
                 horaSaida.setEnabled(false);
-            }else if(horario.getHoraSaida().isEmpty()){
+            }else if(dados.getHoraSaida().isEmpty()){
                 carregaHoraSaida();
                 voltaIntervalo.setEnabled(false);
                 saidaIntervalo.setEnabled(false);
@@ -86,15 +85,15 @@ public class PontoActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_formulario_ok:
-                Horario horario = helper.pegaData();
+                Dados dados = helper.pegaData();
                 DadosDAO dao = new DadosDAO(this);
                 if (data.getText().toString().equals("")) {
                     Toast.makeText(PontoActivity.this, "Preencha o campo DATA", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (horario.getId() != null) {
-                        dao.altera(horario);
+                    if (dados.getId() != null) {
+                        dao.altera(dados);
                     } else {
-                        dao.insere(horario);
+                        dao.insere(dados);
                     }
                     dao.close();
                     finish();

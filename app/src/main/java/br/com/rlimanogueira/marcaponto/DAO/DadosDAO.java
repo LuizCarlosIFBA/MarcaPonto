@@ -6,11 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.io.Closeable;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.rlimanogueira.marcaponto.Model.Horario;
+import br.com.rlimanogueira.marcaponto.Model.Dados;
+
 public class DadosDAO implements Closeable {
 
 
@@ -22,14 +22,14 @@ public class DadosDAO implements Closeable {
         this.context = context;
     }
 
-    public void insere(Horario horario) {
+    public void insere(Dados horario) {
         SQLiteDatabase db = dao.getWritableDatabase();
         ContentValues dados = pegaDados(horario);
 
-        db.insert("Dados",null, dados);
+        db.insert("Usuario",null, dados);
     }
 
-    private ContentValues pegaDados(Horario horario) {
+    private ContentValues pegaDados(Dados horario) {
         ContentValues dados = new ContentValues();
         dados.put("id_dados", horario.getId());
         dados.put("data", horario.getData());
@@ -40,13 +40,13 @@ public class DadosDAO implements Closeable {
         return dados;
     }
 
-    public List<Horario> buscaDatas() {
+    public List<Dados> buscaDatas() {
         String sql = "SELECT * FROM Dados;";
         SQLiteDatabase db = dao.getReadableDatabase();
         Cursor c = db.rawQuery(sql, null);
-        List<Horario> datas = new ArrayList<>();
+        List<Dados> datas = new ArrayList<>();
         while (c.moveToNext()){
-            Horario data = new Horario();
+            Dados data = new Dados();
             data.setId(c.getLong(c.getColumnIndex("id_dados")));
             data.setData(c.getString(c.getColumnIndex("data")));
             data.setHoraEntrada(c.getString(c.getColumnIndex("horaEntrada")));
@@ -61,18 +61,18 @@ public class DadosDAO implements Closeable {
         return datas;
     }
 
-    public void altera(Horario horario) {
+    public void altera(Dados horario) {
         SQLiteDatabase db = dao.getWritableDatabase();
         ContentValues dados = pegaDados(horario);
 
         String [] params = {horario.getId().toString()};
-        db.update("Dados", dados, "id_dados=?",params);
+        db.update("Usuario", dados, "id_dados=?",params);
     }
 
-    public void deleta(Horario horario) {
+    public void deleta(Dados dados) {
         SQLiteDatabase db = dao.getWritableDatabase();
-        String[]params = {String.valueOf(horario.getId())};
-        db.delete("Dados","id_dados=?",params);
+        String[]params = {String.valueOf(dados.getId())};
+        db.delete("Usuario","id_dados=?",params);
     }
 
     @Override

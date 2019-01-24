@@ -1,16 +1,8 @@
 package br.com.rlimanogueira.marcaponto.DAO;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.EditText;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import br.com.rlimanogueira.marcaponto.Model.Horario;
 
 public class SQLiteDAO extends SQLiteOpenHelper {
 

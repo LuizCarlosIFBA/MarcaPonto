@@ -1,24 +1,20 @@
 package br.com.rlimanogueira.marcaponto;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.List;
 
 import br.com.rlimanogueira.marcaponto.DAO.DadosDAO;
-import br.com.rlimanogueira.marcaponto.DAO.SQLiteDAO;
-import br.com.rlimanogueira.marcaponto.Model.Horario;
+import br.com.rlimanogueira.marcaponto.Model.Dados;
 
 public class ListaDatasActivity extends AppCompatActivity {
 
@@ -49,9 +45,9 @@ public class ListaDatasActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-                    Horario horario = (Horario) listaDatas.getItemAtPosition(info.position);
+                    Dados dados = (Dados) listaDatas.getItemAtPosition(info.position);
                     DadosDAO dao = new DadosDAO(ListaDatasActivity.this);
-                    dao.deleta(horario);
+                    dao.deleta(dados);
                     dao.close();
                 carregaLista();
             return false;
@@ -62,10 +58,10 @@ public class ListaDatasActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-                Horario horario = (Horario) listaDatas.getItemAtPosition(info.position);
+                Dados dados = (Dados) listaDatas.getItemAtPosition(info.position);
 
                 Intent vaiParaPonto = new Intent(ListaDatasActivity.this, PontoActivity.class);
-                vaiParaPonto.putExtra("horario", horario);
+                vaiParaPonto.putExtra("dados", dados);
                 startActivity(vaiParaPonto);
 
                 return false;
@@ -77,10 +73,10 @@ public class ListaDatasActivity extends AppCompatActivity {
         listaDatas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> lista, View item, int position, long id) {
-                Horario horario = (Horario) listaDatas.getItemAtPosition(position);
+                Dados dados = (Dados) listaDatas.getItemAtPosition(position);
 
                     Intent vaiParaPonto = new Intent(ListaDatasActivity.this, PontoActivity.class);
-                        vaiParaPonto.putExtra("horario", horario);
+                        vaiParaPonto.putExtra("dados", dados);
                         startActivity(vaiParaPonto);
 
             }
@@ -89,11 +85,11 @@ public class ListaDatasActivity extends AppCompatActivity {
 
     private void carregaLista() {
         DadosDAO dao = new DadosDAO(this);
-        List<Horario> datas = dao.buscaDatas();
+        List<Dados> datas = dao.buscaDatas();
         dao.close();
 
         listaDatas = findViewById(R.id.listaDatas);
-        ArrayAdapter<Horario> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, datas);
+        ArrayAdapter<Dados> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, datas);
         listaDatas.setAdapter(adapter);
     }
 
