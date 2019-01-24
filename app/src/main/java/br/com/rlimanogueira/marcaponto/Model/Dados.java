@@ -3,7 +3,7 @@ package br.com.rlimanogueira.marcaponto.Model;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Horario implements Serializable {
+public class Dados implements Serializable {
     private Long id;
     private String data;
     private String horaEntrada;
