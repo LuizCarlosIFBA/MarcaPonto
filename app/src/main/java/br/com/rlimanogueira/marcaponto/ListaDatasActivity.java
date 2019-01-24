@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import br.com.rlimanogueira.marcaponto.DAO.DadosDAO;
 import br.com.rlimanogueira.marcaponto.DAO.SQLiteDAO;
 import br.com.rlimanogueira.marcaponto.Model.Horario;
 
@@ -49,7 +50,7 @@ public class ListaDatasActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
                     Horario horario = (Horario) listaDatas.getItemAtPosition(info.position);
-                    SQLiteDAO dao = new SQLiteDAO(ListaDatasActivity.this);
+                    DadosDAO dao = new DadosDAO(ListaDatasActivity.this);
                     dao.deleta(horario);
                     dao.close();
                 carregaLista();
@@ -87,7 +88,7 @@ public class ListaDatasActivity extends AppCompatActivity {
     }
 
     private void carregaLista() {
-        SQLiteDAO dao = new SQLiteDAO(this);
+        DadosDAO dao = new DadosDAO(this);
         List<Horario> datas = dao.buscaDatas();
         dao.close();
 

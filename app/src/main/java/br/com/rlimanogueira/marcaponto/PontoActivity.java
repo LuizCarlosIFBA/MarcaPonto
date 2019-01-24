@@ -17,6 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import br.com.rlimanogueira.marcaponto.DAO.DadosDAO;
 import br.com.rlimanogueira.marcaponto.DAO.SQLiteDAO;
 import br.com.rlimanogueira.marcaponto.Model.Horario;
 
@@ -86,7 +87,7 @@ public class PontoActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menu_formulario_ok:
                 Horario horario = helper.pegaData();
-                SQLiteDAO dao = new SQLiteDAO(this);
+                DadosDAO dao = new DadosDAO(this);
                 if (data.getText().toString().equals("")) {
                     Toast.makeText(PontoActivity.this, "Preencha o campo DATA", Toast.LENGTH_SHORT).show();
                 } else {
